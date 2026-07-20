@@ -20,12 +20,11 @@ rmse = None
 r2 = None
 
 
-# Convert input data
+
 def convert_data(data):
     return [float(i.strip()) for i in data.split(",")]
 
 
-# Home page
 @app.route("/")
 def home():
 
@@ -40,9 +39,6 @@ def home():
     )
 
 
-# ---------------------------------
-# Predict Final Marks
-# ---------------------------------
 @app.route("/predict", methods=["POST"])
 def predict():
 
@@ -51,7 +47,7 @@ def predict():
 
     try:
 
-        # Training dataset
+    
 
         study = convert_data(request.form["study_hours"])
         attendance = convert_data(request.form["attendance"])
@@ -59,7 +55,7 @@ def predict():
         final_marks = convert_data(request.form["final_marks"])
 
 
-        # Creating input features
+        
 
         X = np.column_stack(
             (study, attendance, assignment)
@@ -68,18 +64,10 @@ def predict():
         y = np.array(final_marks)
 
 
-        # Train model internally
-
         model = LinearRegression()
         model.fit(X, y)
 
-
-        # Training prediction
-
         y_pred = model.predict(X)
-
-
-        # Metrics
 
         mae = mean_absolute_error(y, y_pred)
 
@@ -91,7 +79,6 @@ def predict():
 
 
 
-        # Testing data
 
         test_study = float(request.form["test_study"])
 
@@ -110,7 +97,7 @@ def predict():
         )
 
 
-        # Final prediction
+        
 
         prediction = model.predict(test_data)[0]
 
@@ -131,7 +118,7 @@ def predict():
 
         return "Error : " + str(e)
 
-# Visualization
+
 
 @app.route("/visualize", methods=["POST"])
 def visualize():
@@ -148,25 +135,23 @@ def visualize():
             return "Please click Predict Final Marks first"
 
 
-        # Actual vs Predicted graph
-
+        
         plt.figure(figsize=(7,5))
 
-# Actual points
+
         plt.scatter(
     range(len(y)),
     y,
     label="Actual Marks"
 )
 
-# Predicted points
         plt.scatter(
     range(len(y_pred)),
     y_pred,
     label="Predicted Marks"
 )
 
-# Straight line connecting predicted values
+
         plt.plot(
         range(len(y_pred)),
         y_pred
@@ -191,7 +176,6 @@ def visualize():
         plt.close()
 
 
-        # Metrics graph
 
         plt.figure(figsize=(7,5))
 
@@ -268,8 +252,6 @@ def visualize():
 
 
 
-# Reset
-
 @app.route("/reset")
 def reset():
 
@@ -302,8 +284,6 @@ def reset():
     )
 
 
-
-# Run Flask
 
 if __name__=="__main__":
 
