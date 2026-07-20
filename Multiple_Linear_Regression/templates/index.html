@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multiple Linear Regression</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Multiple Linear Regression</h1>
+
+<!-- Prediction Form -->
+<form action="/predict" method="POST">
+
+    <h2>Training Dataset</h2>
+
+    <label>
+        <input type="checkbox" checked disabled>
+        Study Hours
+    </label>
+    <textarea name="study_hours" placeholder="2,4,5,6,8" required></textarea>
+
+    <label>
+        <input type="checkbox" checked disabled>
+        Attendance
+    </label>
+    <textarea name="attendance" placeholder="70,75,80,85,90" required></textarea>
+
+    <label>
+        <input type="checkbox" checked disabled>
+        Assignment
+    </label>
+    <textarea name="assignment" placeholder="10,12,15,18,20" required></textarea>
+
+    <label>
+        <input type="checkbox" checked disabled>
+        Final Marks
+    </label>
+    <textarea name="final_marks" placeholder="45,55,60,70,85" required></textarea>
+
+    <hr>
+
+    <h2>Testing Data</h2>
+
+    <label>Study Hours</label>
+    <input type="number" step="any" name="test_study" required>
+
+    <label>Attendance</label>
+    <input type="number" step="any" name="test_attendance" required>
+
+    <label>Assignment</label>
+    <input type="number" step="any" name="test_assignment" required>
+
+    <br><br>
+
+    <button type="submit" class="predict-btn">
+    Predict Final Marks
+</button>
+
+</form>
+
+<br>
+
+<!-- Visualize Button -->
+<form action="/visualize" method="POST">
+    <button type="submit" class="visualize-btn">
+        Visualize
+    </button>
+</form>
+
+<br>
+
+<!-- Reset Button -->
+<form action="/reset">
+    <button type="submit" class="reset-btn">
+        Reset
+    </button>
+</form>
+
+{% if prediction %}
+
+<hr>
+
+<h2>Predicted Final Marks</h2>
+
+<h3>{{ prediction }}</h3>
+
+<table border="1">
+
+<tr>
+    <th>Metric</th>
+    <th>Value</th>
+</tr>
+
+<tr>
+    <td>MAE</td>
+    <td>{{ mae }}</td>
+</tr>
+
+<tr>
+    <td>MSE</td>
+    <td>{{ mse }}</td>
+</tr>
+
+<tr>
+    <td>RMSE</td>
+    <td>{{ rmse }}</td>
+</tr>
+
+<tr>
+    <td>R²</td>
+    <td>{{ r2 }}</td>
+</tr>
+
+</table>
+
+{% endif %}
+
+{% if graph %}
+
+<hr>
+
+<h2>Actual vs Predicted Graph</h2>
+
+<img src="{{ url_for('static', filename='prediction.png') }}" width="700">
+
+<h2>Performance Metrics Graph</h2>
+
+<img src="{{ url_for('static', filename='metrics.png') }}" width="700">
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
