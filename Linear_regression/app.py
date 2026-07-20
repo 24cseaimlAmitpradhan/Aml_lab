@@ -78,10 +78,10 @@ def home():
             r = compute_regression(x, y)
 
             if action == "visualize":
-                # ---- Regression fit + metrics scatter plot ----
+                
                 plt.figure(figsize=(12, 5))
 
-                # Left subplot: regression fit
+                
                 plt.subplot(1, 2, 1)
                 plt.scatter(x, y, color="#4361ee", s=70, label="Data Points", edgecolor="white")
                 x_line = np.linspace(x.min(), x.max(), 100)
@@ -94,7 +94,7 @@ def home():
                 plt.grid(alpha=0.3)
                 plt.legend(loc="lower right")
 
-                # Right subplot: scatter plot of metrics
+                
                 plt.subplot(1, 2, 2)
                 metrics = ["MAE", "MSE", "RMSE", "R²"]
                 values = [r["mae"], r["mse"], r["rmse"], r["r2"]]
